@@ -1,11 +1,11 @@
+<?php
+
 /******************************************************************************
 *
 *	Feature mapper. Maps features from legacvy DB to more streamlined versions
 *	for storage in the new DB.
 *
 ******************************************************************************/
-
-<?php
 
 class Pair
 {
