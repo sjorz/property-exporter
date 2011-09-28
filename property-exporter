@@ -1,0 +1,62 @@
+#!/bin/bash
+
+OWNER=george
+SCRIPT=/home/george/property-exporter/exporter.sh
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+NAME='Property Exporter'
+
+LOCK_FILE=/tmp/exporter.lock
+RUN_FILE=/tmp/exporter.run
+PIDFILE=/var/run/property-exporter.pid
+
+case "$1" in
+    start)
+	if [ -f $RUN_FILE ]
+	then
+	    echo "$NAME already active"
+	    exit
+	fi
+
+	if [ -f $LOCK_FILE ]
+	then
+	    echo "$NAME still busy"
+	    exit
+	fi
+
+	echo "Starting $NAME... "
+	touch $RUN_FILE
+	[ -f $LOCK_FILE ] && rm -f $LOCK_FILE
+    	if start-stop-daemon --start --quiet --umask 007 --pidfile $PIDFILE --chuid $OWNER:$OWNER --exec $SCRIPT
+    	then
+            echo Started
+    	else
+            echo "failed"
+    	fi
+
+	;;
+    stop)
+	echo -n "Stopping $NAME: "
+	rm $RUN_FILE
+	echo "$NAME stopped"
+	rm -f $PIDFILE
+	;;
+
+    restart)
+	${0} stop
+	${0} start
+	;;
+
+    force)
+	${0} stopS
+	rm $LOCK_FILE
+	${0} start
+	;;
+  *)
+	echo "Usage: /etc/init.d/$NAME {start|stop|restart|force}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
