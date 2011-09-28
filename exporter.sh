@@ -71,15 +71,15 @@ cd $HOME
 #	Start the actual export script, results to $OUT_FULE
 #
 
-############### php property-exporter/export.php $* > $OUT_FILE
-############### cp -p $OUT_FILE $OUT_FILE.bak
+php property-exporter/export.php $* > $OUT_FILE
+cp -p $OUT_FILE $OUT_FILE.bak
 
 #
 #	Run the import ruby script on the export results
 #
 
-############### cat $OUT_FILE | ruby run.rb > import.log
-############### cp -p import.log import.log.bak
+cat $OUT_FILE | ruby run.rb > import.log
+cp -p import.log import.log.bak
 
 #
 #	Use 'at' to schedule the nex execution
