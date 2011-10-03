@@ -117,6 +117,11 @@ class Pair
 
 $res = array ();
 
+function clearFeatureMap()
+{
+	$res = array ();
+}
+
 function addPair ($g, $n)
 {
 	global $res;
@@ -132,12 +137,14 @@ function addPair ($g, $n)
 }
 
 // Create feature Map. Expected is an array of maps, where each map has two
-// elements, "name", and "group". We return the same structiure containing the
-// mapped gorups and names.
+// elements, "name", and "group". We return the same structure containing the
+// mapped grooups and names.
 
 function createFeatureMap ($sqlResArr)
 {
 	global $res;
+
+	$res = array();
 //print_r ($sqlResArr);
 
 	foreach ($sqlResArr as $elem)

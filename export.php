@@ -151,6 +151,10 @@ function process ($pid)
 	$inspectionDetailsTable = new Table ('dbo.InspectionDetails');
 	$featureRelTable = new Table ('dbo.PropertyFeatureRel');
 
+	// Clear feature map
+
+	clearFeatureMap();
+
 	// Read the property. We expect only one row.
 
 	$propertyTable->executeSQL (getSqlForProperty($pid));
